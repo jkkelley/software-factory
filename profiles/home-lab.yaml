@@ -1,0 +1,25 @@
+# Home lab profile: autonomous. See docs/07-profiles.md.
+profile: home-lab
+retry_budget_per_node: 3
+
+nodes:
+  intake:         { enabled: true, degree_of_freedom: medium }
+  design:         { enabled: true, degree_of_freedom: high }
+  implementation: { enabled: true, degree_of_freedom: high }
+  test:           { enabled: true, degree_of_freedom: medium }
+  review:         { enabled: true, degree_of_freedom: low }
+  integration:
+    enabled: true
+    degree_of_freedom: high
+    merge_gate: automatic
+    required_human_approvals: 0
+  deploy:
+    enabled: true
+    degree_of_freedom: medium
+    gate: automatic
+  archive:        { enabled: true, degree_of_freedom: low }
+
+approved_providers: []   # owner's choice; list the AI providers and tools you allow
+audit_trail: recommended
+max_data_classification: internal
+stale_pr_days: 7

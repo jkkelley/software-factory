@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# Editors and OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Secrets and local config — never commit
+.env
+.env.*
+*.pem
+*.key
+profiles/local*.yaml
+
+# Agent worktrees created next to the repo or inside it
+wt-*/

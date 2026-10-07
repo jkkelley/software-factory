@@ -1,0 +1,26 @@
+{
+  "work_item_id": "SF-42",
+  "node": "test",
+  "attempt": 1,
+  "status": "BLOCKED",
+  "degree_of_freedom": "low",
+  "summary": "Integration test suite cannot start: the test database fixture referenced in the design does not exist.",
+  "artifacts": {
+    "branch": "feat/SF-42-retry-backoff",
+    "commit": "3f9c2ab",
+    "pull_request": "#17"
+  },
+  "evidence": {
+    "reason_code": "MISSING_FIXTURE",
+    "command": "make test-integration",
+    "observed": "FileNotFoundError: fixtures/synthetic_orders.json",
+    "expected": "Suite starts and loads the synthetic orders fixture",
+    "reproduce": [
+      "git switch feat/SF-42-retry-backoff",
+      "make test-integration"
+    ],
+    "blocked_on": "design"
+  },
+  "data_classification": "public",
+  "produced_at": "2026-10-07T23:15:00Z"
+}

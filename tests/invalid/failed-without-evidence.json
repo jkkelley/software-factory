@@ -1,0 +1,11 @@
+{
+  "work_item_id": "SF-7",
+  "node": "implementation",
+  "attempt": 2,
+  "status": "FAILED",
+  "degree_of_freedom": "medium",
+  "summary": "It didn't work.",
+  "artifacts": {},
+  "data_classification": "public",
+  "produced_at": "2026-10-07T22:00:00Z"
+}

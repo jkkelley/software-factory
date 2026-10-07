@@ -1,0 +1,16 @@
+{
+  "work_item_id": "SF-42",
+  "node": "integration",
+  "attempt": 1,
+  "status": "AWAITING_APPROVAL",
+  "degree_of_freedom": "low",
+  "summary": "Rebased on main, full suite green. Waiting for two human reviewer approvals per the company profile.",
+  "artifacts": {
+    "branch": "feat/SF-42-retry-backoff",
+    "commit": "a71d0e4",
+    "pull_request": "#17"
+  },
+  "approvals": [],
+  "data_classification": "public",
+  "produced_at": "2026-10-07T23:40:00Z"
+}
