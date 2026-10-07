@@ -1,0 +1,85 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "handoff.schema.json",
+  "title": "Software Factory node handoff",
+  "description": "The only payload that crosses from one node to the next. See docs/03-handoff-contract.md.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "work_item_id",
+    "node",
+    "attempt",
+    "status",
+    "degree_of_freedom",
+    "summary",
+    "artifacts",
+    "data_classification",
+    "produced_at"
+  ],
+  "properties": {
+    "work_item_id": { "type": "string", "pattern": "^[A-Z][A-Z0-9]*-[0-9]+$" },
+    "node": {
+      "enum": ["intake", "design", "implementation", "test", "review", "integration", "deploy", "archive"]
+    },
+    "attempt": { "type": "integer", "minimum": 1, "maximum": 3 },
+    "status": {
+      "enum": ["DONE", "FAILED", "BLOCKED", "AWAITING_APPROVAL", "ESCALATED", "SKIPPED"]
+    },
+    "degree_of_freedom": { "enum": ["low", "medium", "high"] },
+    "summary": { "type": "string", "minLength": 1, "maxLength": 500 },
+    "artifacts": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "branch": { "type": "string" },
+        "commit": { "type": "string", "pattern": "^[0-9a-f]{7,40}$" },
+        "pull_request": { "type": "string" },
+        "files": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["reason_code", "command", "observed", "expected", "reproduce"],
+      "properties": {
+        "reason_code": { "type": "string", "pattern": "^[A-Z][A-Z0-9_]*$" },
+        "command": { "type": "string", "minLength": 1 },
+        "observed": { "type": "string", "minLength": 1 },
+        "expected": { "type": "string", "minLength": 1 },
+        "reproduce": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+        "blocked_on": { "type": "string" },
+        "prior_attempts": { "type": "array", "items": { "type": "object" } }
+      }
+    },
+    "approvals": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["reviewer", "approved_at"],
+        "properties": {
+          "reviewer": { "type": "string" },
+          "approved_at": { "type": "string", "format": "date-time" }
+        }
+      }
+    },
+    "data_classification": { "enum": ["public", "internal", "restricted"] },
+    "produced_at": { "type": "string", "format": "date-time" }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "status": { "enum": ["FAILED", "BLOCKED", "ESCALATED"] } } },
+      "then": { "required": ["evidence"] }
+    },
+    {
+      "if": { "properties": { "status": { "const": "BLOCKED" } } },
+      "then": { "properties": { "evidence": { "required": ["blocked_on"] } } }
+    },
+    {
+      "if": { "properties": { "status": { "const": "ESCALATED" } } },
+      "then": {
+        "properties": { "attempt": { "const": 3 }, "evidence": { "required": ["prior_attempts"] } }
+      }
+    }
+  ]
+}

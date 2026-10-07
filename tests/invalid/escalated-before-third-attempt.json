@@ -1,0 +1,19 @@
+{
+  "work_item_id": "SF-8",
+  "node": "test",
+  "attempt": 2,
+  "status": "ESCALATED",
+  "degree_of_freedom": "low",
+  "summary": "Escalating early.",
+  "artifacts": {},
+  "evidence": {
+    "reason_code": "FLAKY",
+    "command": "make test",
+    "observed": "1 failed",
+    "expected": "0 failed",
+    "reproduce": ["make test"],
+    "prior_attempts": []
+  },
+  "data_classification": "public",
+  "produced_at": "2026-10-07T22:05:00Z"
+}

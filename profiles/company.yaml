@@ -1,0 +1,26 @@
+# Company profile: human-gated, HIPAA-ready. See docs/07-profiles.md and docs/08-compliance-hipaa.md.
+# Keep organization-specific values in a private copy inside the organization, not here.
+profile: company
+retry_budget_per_node: 3
+
+nodes:
+  intake:         { enabled: true, degree_of_freedom: low }
+  design:         { enabled: true, degree_of_freedom: medium }
+  implementation: { enabled: true, degree_of_freedom: medium }
+  test:           { enabled: true, degree_of_freedom: low }
+  review:         { enabled: true, degree_of_freedom: low }
+  integration:
+    enabled: true
+    degree_of_freedom: low
+    merge_gate: human
+    required_human_approvals: 2
+  deploy:
+    enabled: false        # switch on only after the team is comfortable
+    degree_of_freedom: low
+    gate: human
+  archive:        { enabled: true, degree_of_freedom: low }
+
+approved_providers: []   # organization-approved only; BAA required where PHI could be involved
+audit_trail: required
+max_data_classification: internal   # restricted data is referenced, never embedded
+stale_pr_days: 5
